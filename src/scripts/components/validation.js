@@ -1,5 +1,3 @@
-// src/scripts/components/validation.js
-
 export function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
   forms.forEach((form) => {
@@ -32,16 +30,11 @@ function checkInputValidity(form, input, config) {
   if (input.validity.valid) {
     hideInputError(form, input, config);
   } else {
-    showInputError(form, input, input.validationMessage, config);
-  }
-
-  // Кастомное сообщение для полей с pattern
-  if (input.type === 'text' && input.hasAttribute('pattern')) {
-    if (!input.validity.patternMismatch) return;
-    const errorElement = form.querySelector(`.${input.id}-error`);
-    if (errorElement) {
-      errorElement.textContent = 'Разрешены только латинские, кириллические буквы, дефис и пробелы';
+    let errorMessage = input.validationMessage;
+    if (input.validity.patternMismatch && input.dataset.errorMessage) {
+      errorMessage = input.dataset.errorMessage;
     }
+    showInputError(form, input, errorMessage, config);
   }
 }
 
@@ -64,7 +57,6 @@ function hideInputError(form, input, config) {
 }
 
 function hasInvalidInput(inputs) {
-  // Превращаем NodeList в массив, чтобы использовать .some()
   return Array.from(inputs).some((input) => !input.validity.valid);
 }
 
