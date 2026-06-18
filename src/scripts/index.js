@@ -300,9 +300,7 @@ document.querySelector('.profile__add-button').addEventListener('click', () => {
 
 // Обновление аватара (клик по аватару)
 profileAvatar.addEventListener('click', () => {
-  avatarForm.reset();
-  clearValidation(avatarForm, validationConfig);
-  openModal(avatarPopup);
+  alert('Клик по аватару!');
 });
 // Закрытие по клику на крестик
 document.querySelectorAll('.popup__close').forEach((button) => {
