@@ -34,6 +34,7 @@ function checkInputValidity(form, input, config) {
   } else {
     showInputError(form, input, input.validationMessage, config);
   }
+}
   // Кастомное сообщение для полей с pattern
   if (input.type === 'text' && input.hasAttribute('pattern')) {
     if (!input.validity.patternMismatch) return;
