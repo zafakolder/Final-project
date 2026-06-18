@@ -99,12 +99,7 @@ function createInfoString(key, value) {
 }
 
 // Создание превью пользователя
-function createUserPreview(user) {
-  const template = infoUserPreviewTemplate.content.cloneNode(true);
-  const nameElement = template.querySelector('.popup-info__user-name');
-  nameElement.textContent = user.name;
-  return template;
-}
+
 
 // Отрисовка карточки
 function renderCard(cardData, userId) {
@@ -169,27 +164,34 @@ function handleInfoClick(cardId) {
       const cardData = cards.find((c) => c._id === cardId);
       if (!cardData) throw new Error('Карточка не найдена');
 
+      // Очищаем контейнеры
       infoList.innerHTML = '';
       infoUserList.innerHTML = '';
 
+      // Заголовок
       infoTitle.textContent = `Статистика карточки «${cardData.name}»`;
 
-      // Основная информация
+	infoList.append(createInfoString('Описание:', cardData.name));	
+
+      // Информация: дата, количество лайков, автор
       const createdDate = formatDate(new Date(cardData.createdAt));
       infoList.append(createInfoString('Дата создания:', createdDate));
       infoList.append(createInfoString('Количество лайков:', cardData.likes.length));
       infoList.append(createInfoString('Автор:', cardData.owner.name));
 
-      // Список лайкнувших пользователей
-      if (cardData.likes.length === 0) {
-        const emptyMessage = document.createElement('p');
-        emptyMessage.textContent = 'Пока никто не лайкнул';
-        emptyMessage.className = 'popup-info__empty-message';
-        infoUserList.append(emptyMessage);
-      } else {
-        cardData.likes.forEach((user) => {
-          infoUserList.append(createUserPreview(user));
-        });
+      // Список пользователей, лайкнувших карточку
+if (cardData.likes.length === 0) {
+  const emptyMessage = document.createElement('p');
+  emptyMessage.textContent = 'Пока никто не лайкнул';
+  emptyMessage.className = 'popup-info__empty-message';
+  infoUserList.append(emptyMessage);
+} else {
+  cardData.likes.forEach((user) => {
+    const userItem = document.createElement('span');
+    userItem.className = 'popup-info__user-item';
+    userItem.textContent = user.name;
+    infoUserList.append(userItem);
+  });
       }
 
       openModal(infoPopup);

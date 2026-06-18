@@ -498,21 +498,37 @@ body {
 }
 
 .popup-info__list {
-  margin: 0 0 20px 0;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 8px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 16px 0;
 }
 
+.popup-info__definition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+  margin: 0 0 4px 0;
+  padding: 0;
+  background: none; /* убираем фон у всей строки */
+}
+
+/* Только название (ключ) — серый фон */
 .popup-info__definition-term {
+  background-color: #8d8d8d;
+  padding: 4px 12px;
+  border-radius: 4px;
   font-weight: 700;
   color: #000000;
+  display: inline-block;
 }
 
+/* Значение — без фона */
 .popup-info__definition-description {
   font-weight: 400;
   color: #000000;
   margin: 0;
+  padding: 4px 0; /* чтобы выровнять по вертикали с ключом */
 }
 
 .popup-info__users-title {
@@ -531,11 +547,7 @@ body {
   padding-right: 5px;
 }
 
-.popup-info__user-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+
 
 .popup-info__user-avatar {
   width: 32px;
@@ -591,10 +603,7 @@ body {
     padding: 25px 22px;
   }
 
-  .popup-info__list {
-    grid-template-columns: 1fr;
-    gap: 4px 0;
-  }
+  
 
   .popup-info__users-list {
     max-height: 120px;
@@ -623,14 +632,38 @@ body {
   }
 }
 
-.popup-info__user-item {
-  background-color: #f0f0f0;
-  padding: 8px 12px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-}
+
 .popup-info__user-name {
   font-weight: 400;
   font-size: 14px;
   color: #000000;
+}
+
+/* Список пользователей – горизонтальный, с переносом */
+.popup-info__users-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Каждое имя – серый фон, отступы, скругление */
+.popup-info__user-item {
+  background-color: #8d8d8d;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #000000;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Сообщение "Пока никто не лайкнул" – тоже стилизуем */
+.popup-info__empty-message {
+  font-size: 14px;
+  color: #8b8b8b;
+  margin: 0;
 }
