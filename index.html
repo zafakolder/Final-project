@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mesto</title>
+</head>
+<body class="page">
+
+  <!-- Шапка -->
+  <header class="header">
+    <img class="header__logo" src="./src/images/logo.jpg" alt="Логотип Mesto" />
+  </header>
+
+  <!-- Профиль пользователя -->
+  <section class="profile">
+    <div class="profile__avatar-wrapper">
+      <img class="profile__avatar" src="#" alt="Аватар пользователя" />
+      <div class="profile__avatar-overlay"></div>
+    </div>
+    <div class="profile__info">
+      <div class="profile__name-row">
+        <h1 class="profile__title"></h1>
+        <button class="profile__edit-button" type="button" aria-label="Редактировать профиль"></button>
+      </div>
+      <p class="profile__description"></p>
+    </div>
+    <button class="profile__add-button" type="button" aria-label="Добавить карточку"></button>
+  </section>
+
+  <!-- Список карточек -->
+  <ul class="places"></ul>
+
+  <!-- Подвал -->
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2025 Mesto</p>
+  </footer>
+
+  <!-- ========== Шаблоны ========== -->
+
+  <!-- Шаблон карточки -->
+  <template id="card-template">
+    <li class="card">
+      <img class="card__image" src="#" alt="Изображение" />
+      <button class="card__delete-button" type="button" aria-label="Удалить карточку"></button>
+      <button class="card__control-button_type_info" type="button" aria-label="Информация о карточке"></button>
+      <div class="card__info">
+        <h2 class="card__title">Название</h2>
+        <div class="card__like-wrapper">
+          <button class="card__like-button" type="button" aria-label="Лайк"></button>
+          <span class="card__like-count">0</span>
+        </div>
+      </div>
+    </li>
+  </template>
+
+  <!-- Шаблон для строки статистики (ключ-значение) -->
+  <template id="popup-info-definition-template">
+    <dl class="popup-info__definition">
+      <dt class="popup-info__definition-term"></dt>
+      <dd class="popup-info__definition-description"></dd>
+    </dl>
+  </template>
+
+  <!-- Шаблон для элемента пользователя в списке лайкнувших -->
+  <template id="popup-info-user-preview-template">
+    <div class="popup-info__user-item">
+      <img class="popup-info__user-avatar" src="#" alt="Аватар" />
+      <span class="popup-info__user-name"></span>
+    </div>
+  </template>
+
+  <!-- ========== Попапы ========== -->
+
+  <!-- Попап редактирования профиля -->
+  <div class="popup popup_type_edit" id="edit-profile-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" name="edit-profile" novalidate>
+        <input
+          class="popup__input popup__input_type_name"
+          id="name"
+          type="text"
+          name="name"
+          placeholder="Имя"
+          required
+          minlength="2"
+          maxlength="40"
+          pattern="[A-Za-zА-Яа-яЁё\s\-]+"
+        />
+        <span class="popup__input-error name-error"></span>
+        <input
+          class="popup__input popup__input_type_description"
+          id="description"
+          type="text"
+          name="description"
+          placeholder="О себе"
+          required
+          minlength="2"
+          maxlength="200"
+        />
+        <span class="popup__input-error description-error"></span>
+        <button class="popup__button popup__button_disabled" type="submit" disabled>Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Попап добавления карточки -->
+  <div class="popup popup_type_new-card" id="add-card-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="new-place" novalidate>
+        <input
+          class="popup__input popup__input_type_card-name"
+          id="place-name"
+          type="text"
+          name="place-name"
+          placeholder="Название"
+          required
+          minlength="2"
+          maxlength="30"
+          pattern="[A-Za-zА-Яа-яЁё\s\-]+"
+        />
+        <span class="popup__input-error place-name-error"></span>
+        <input
+          class="popup__input popup__input_type_url"
+          id="link"
+          type="url"
+          name="link"
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span class="popup__input-error link-error"></span>
+        <button class="popup__button popup__button_disabled" type="submit" disabled>Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Попап обновления аватара -->
+  <div class="popup popup_type_avatar" id="avatar-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__form" name="avatar" novalidate>
+        <input
+          class="popup__input popup__input_type_avatar"
+          id="avatar"
+          type="url"
+          name="avatar"
+          placeholder="Ссылка на аватар"
+          required
+        />
+        <span class="popup__input-error avatar-error"></span>
+        <button class="popup__button popup__button_disabled" type="submit" disabled>Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Попап просмотра изображения -->
+  <div class="popup popup_type_image" id="image-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <img class="popup__image" src="#" alt="Увеличенное изображение" />
+      <p class="popup__caption"></p>
+    </div>
+  </div>
+
+  <!-- Попап подтверждения удаления -->
+  <div class="popup popup_type_remove-card" id="delete-popup">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <form class="popup__form" name="remove-card" novalidate>
+        <button class="popup__button" type="submit">Да</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Попап статистики карточки (дополнительное задание) -->
+  <div class="popup popup_type_info" id="info-popup">
+    <div class="popup__container popup__content_info">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Статистика карточки</h2>
+      <div class="popup-info__list"></div>
+      <h3 class="popup-info__users-title">Пользователи, лайкнувшие карточку</h3>
+      <div class="popup-info__users-list"></div>
+    </div>
+  </div>
+
+  <!-- ========== Подключение главного скрипта ========== -->
+  <script type="module" src="./src/scripts/index.js"></script>
+</body>
+</html>
