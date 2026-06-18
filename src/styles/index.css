@@ -622,3 +622,15 @@ body {
     font-size: 14px;
   }
 }
+
+.popup-info__user-item {
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+.popup-info__user-name {
+  font-weight: 400;
+  font-size: 14px;
+  color: #000000;
+}

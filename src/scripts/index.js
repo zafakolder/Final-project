@@ -101,11 +101,8 @@ function createInfoString(key, value) {
 // Создание превью пользователя
 function createUserPreview(user) {
   const template = infoUserPreviewTemplate.content.cloneNode(true);
-  const avatar = template.querySelector('.popup-info__user-avatar');
-  const name = template.querySelector('.popup-info__user-name');
-  avatar.src = user.avatar;
-  avatar.alt = user.name;
-  name.textContent = user.name;
+  const nameElement = template.querySelector('.popup-info__user-name');
+  nameElement.textContent = user.name;
   return template;
 }
 
