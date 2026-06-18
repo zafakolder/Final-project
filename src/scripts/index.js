@@ -300,7 +300,13 @@ document.querySelector('.profile__add-button').addEventListener('click', () => {
 
 // Обновление аватара (клик по аватару)
 profileAvatar.addEventListener('click', () => {
-  alert('Клик по аватару!');
+   if (avatarPopup && avatarForm && typeof openModal === 'function' && typeof clearValidation === 'function') {
+    avatarForm.reset();
+    clearValidation(avatarForm, validationConfig);
+    openModal(avatarPopup);
+  } else {
+    console.error('Одна из переменных не определена!');
+  }
 });
 // Закрытие по клику на крестик
 document.querySelectorAll('.popup__close').forEach((button) => {
